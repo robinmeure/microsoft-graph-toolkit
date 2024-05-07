@@ -55,7 +55,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: coverage
-          path: coverage/cobertura-coverage.xml
+          path: coverage/lcov-report/index.html
 
       - name: Run sonar cloud analysis
         uses: SonarSource/sonarcloud-github-action@master

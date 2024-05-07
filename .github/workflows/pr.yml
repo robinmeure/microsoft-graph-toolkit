@@ -46,7 +46,7 @@ jobs:
         if: always() # run this step even if previous step failed
         with:
           name: coverage
-          path: coverage/cobertura-coverage.xml
+          path: coverage/
 
       - name: Code Coverage Summary Report
         uses: irongut/CodeCoverageSummary@v1.3.0
@@ -87,7 +87,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: coverage
-          path: coverage/cobertura-coverage.xml
+          path: coverage/lcov-report/index.html
 
       - name: Run sonar cloud analysis
         uses: SonarSource/sonarcloud-github-action@master
