@@ -72,3 +72,17 @@ jobs:
       - name: One or more build matrix options failed
         if: ${{ contains(needs.*.result, 'failure') }}
         run: exit 1
+
+  # Configuration to run a SonarCloud analysis on main, release and next branches
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
