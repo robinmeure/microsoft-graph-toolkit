@@ -43,13 +43,21 @@ jobs:
 
   # Configuration to run a SonarCloud analysis on main branch
   sonarcloud:
-    name: SonarCloud
+    name: SonarCloud Analysis
     runs-on: ubuntu-latest
+    needs: build
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
-      - name: SonarCloud Scan
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: coverage
+          path: coverage/cobertura-coverage.xml
+
+      - name: Run sonar cloud analysis
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
